@@ -1,0 +1,29 @@
+{
+  "_doc": "ONE config file for the site. After editing, run: python3 build.py   (then commit + push). An empty link = its button shows 'Coming soon'. Nothing here is secret: all of it is public on the site.",
+  "buy_url": "",
+  "trial_url": "",
+  "portal_url": "",
+  "support_email": "",
+  "video": "",
+  "screenshot": "",
+  "site_url": "",
+  "base_path": "",
+  "owner": "mcode visuals",
+  "price": "€50",
+  "trial_days": 14,
+  "grace_days": 30,
+  "legal_draft": true,
+  "guide_skip": ["7"],
+  "_notes": {
+    "buy_url": "Polar checkout link of the paid product (sandbox first, then live). Set the checkout's success URL to <site>/thanks/.",
+    "trial_url": "Polar checkout link of the free (EUR 0) trial product: it gives access to the private repository.",
+    "portal_url": "Polar customer portal (buyers free a computer, see their key). Same value as portal_url in core/license.json of the product.",
+    "support_email": "Public support address. Empty = the support page says it is coming and points to the in-app report.",
+    "video": "Demo video: an https embed URL (YouTube / Vimeo embed link) or a path to an .mp4 inside this repo (under 100 MB). Empty = 'coming soon' slot.",
+    "screenshot": "Path of the PERFORM screenshot inside this repo, e.g. assets/perform.jpg. Empty = the screenshot block is left out.",
+    "site_url": "Full public URL without trailing slash, e.g. https://org.github.io . Used for canonical links and sitemap.xml. Empty = none.",
+    "base_path": "'' for a root site (<org>.github.io), '/backline-site' for a project site. Only used by 404.html.",
+    "legal_draft": "true = the EULA / privacy / terms pages show a 'draft, being checked by a lawyer' note. Set false only when the lawyer's OK is in writing (G4).",
+    "guide_skip": "Guide section numbers left out of the site (7 = internal known open points)."
+  }
+}
