@@ -23,6 +23,26 @@ MARK = ('<svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect x="1" y="
         'stroke="#ff453a" stroke-width="1.6"/><rect x="12" y="4" width="9" height="14" rx="1.5" stroke="#32d74b" '
         'stroke-width="1.6"/></svg>')
 esc = html.escape
+
+
+def img_size(path):
+    """(width, height) of a PNG or JPEG (stdlib only); (1920, 1080) if unknown."""
+    try:
+        b = Path(path).read_bytes()
+        if b[:8] == b"\x89PNG\r\n\x1a\n":
+            return int.from_bytes(b[16:20], "big"), int.from_bytes(b[20:24], "big")
+        i = 2
+        while b[:2] == b"\xff\xd8" and i < len(b) - 9:
+            if b[i] != 0xFF:
+                i += 1
+                continue
+            m = b[i + 1]
+            if m in (0xC0, 0xC1, 0xC2):
+                return int.from_bytes(b[i + 7:i + 9], "big"), int.from_bytes(b[i + 5:i + 7], "big")
+            i += 2 + int.from_bytes(b[i + 2:i + 4], "big")
+    except OSError:
+        pass
+    return 1920, 1080
 GUIDE_PATCH = [(
     "1. Get the system: `git clone` the repo into any folder you like (for example `~/Documents/av_infrastructure`).",
     "1. Get the files: after the purchase (or the free trial), open the order email and press **Access purchase**: this is your "
@@ -431,7 +451,10 @@ class Site:
         t = (HERE / "templates" / "landing.html").read_text(encoding="utf-8")
         v = c.get("video", "")
         if v.endswith(".mp4"):
-            video = '<div class="mon"><video controls preload="none" src="%s"></video><span class="tag pgm"><b>PGM</b> demo reel</span></div>' % esc(v)
+            p = c.get("video_poster", "")
+            poster = ' poster="@@R@@%s"' % esc(p) if p else ""
+            video = ('<div class="mon"><video controls playsinline preload="none"%s src="@@R@@%s"></video>'
+                     '<span class="tag pgm"><b>PGM</b> demo reel</span></div>') % (poster, esc(v))
         elif v:
             video = ('<div class="mon"><iframe src="%s" title="Backline demo video" loading="lazy" allow="fullscreen; picture-in-picture" '
                      'allowfullscreen></iframe><span class="tag pgm"><b>PGM</b> demo reel</span></div>') % esc(v)
@@ -439,8 +462,10 @@ class Site:
             video = ('<div class="mon"><div class="slot"><span class="note">Demo video coming soon</span></div>'
                      '<span class="tag pgm"><b>PGM</b> demo reel</span></div>')
         s = c.get("screenshot", "")
-        shot = ('<figure class="shot" style="margin-inline:0"><img src="@@R@@%s" alt="The PERFORM screen: program and preview, '
-                'scenes and effects, lights grid, status bar" width="1920" height="1080" loading="lazy"></figure>' % esc(s)) if s else ""
+        alt = c.get("screenshot_alt") or "The PERFORM screen: program and preview, scenes and effects, lights grid, status bar"
+        w, h = img_size(HERE / s) if s else (1920, 1080)
+        shot = ('<figure class="shot" style="margin-inline:0"><img src="@@R@@%s" alt="%s" width="%d" height="%d" loading="lazy">'
+                '</figure>' % (esc(s), esc(alt), w, h)) if s else ""
         rep = {"%%BUY_BTN%%": self.buy(), "%%BUY_BTN_PRICE%%": self.btn(c.get("buy_url"), "Buy on Polar", "buy"),
                "%%TRIAL_BTN%%": self.trial(), "%%VIDEO%%": video, "%%SCREENSHOT%%": shot,
                "%%GRACE%%": str(c["grace_days"]), "%%PRICE%%": esc(c["price"]), "%%TRIAL_DAYS%%": str(c["trial_days"])}

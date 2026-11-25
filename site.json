@@ -3,9 +3,11 @@
   "buy_url": "https://buy.polar.sh/polar_cl_4b4DLxb6pcuyNcsvIT9KgUtg0guuQCgYWkU6e1n8egt",
   "trial_url": "https://buy.polar.sh/polar_cl_mqNf4KJNM6JNfPQt6KQTy71zm9UeWYrdqAbTS3FO24c",
   "portal_url": "",
-  "support_email": "",
-  "video": "",
-  "screenshot": "",
+  "support_email": "ma.codeeee@gmail.com",
+  "video": "assets/media/demo.mp4",
+  "video_poster": "assets/media/demo_poster.jpg",
+  "screenshot": "assets/media/perform.jpg",
+  "screenshot_alt": "Backline in TouchDesigner: the controls screen with MIDI mapping",
   "site_url": "https://backline-live.github.io",
   "base_path": "",
   "owner": "mcode visuals",
@@ -26,6 +28,8 @@
     "site_url": "Full public URL without trailing slash, e.g. https://org.github.io . Used for canonical links and sitemap.xml. Empty = none.",
     "base_path": "'' for a root site (<org>.github.io), '/backline-site' for a project site. Only used by 404.html.",
     "legal_draft": "true = the EULA / privacy / terms pages show a 'draft, being checked by a lawyer' note. Set false only when the lawyer's OK is in writing (G4).",
-    "guide_skip": "Guide section numbers left out of the site (7 = internal known open points)."
+    "guide_skip": "Guide section numbers left out of the site (7 = internal known open points).",
+    "video_poster": "Still image shown before the .mp4 video plays (path inside this repo). Empty = black frame.",
+    "screenshot_alt": "Alt text of the screenshot (what it shows). Empty = default PERFORM description."
   }
 }
