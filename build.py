@@ -23,6 +23,13 @@ MARK = ('<svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect x="1" y="
         'stroke="#ff453a" stroke-width="1.6"/><rect x="12" y="4" width="9" height="14" rx="1.5" stroke="#32d74b" '
         'stroke-width="1.6"/></svg>')
 esc = html.escape
+GUIDE_PATCH = [(
+    "1. Get the system: `git clone` the repo into any folder you like (for example `~/Documents/av_infrastructure`).",
+    "1. Get the files: after the purchase (or the free trial), open the order email and press **Access purchase**: this is your "
+    "Polar customer portal. There press **Connect GitHub** (your own GitHub account): GitHub invites you to the private release "
+    "repository. Accept the invitation (GitHub email, or github.com/notifications), then `git clone` the repository into any "
+    "folder you like (for example `~/Documents/backline`). Your licence key is shown in the same portal and in the order email "
+    "(the free trial has no key).")]
 
 
 # ------------------------------------------------------------------ markdown (the subset the docs use)
@@ -481,6 +488,12 @@ class Site:
             if num in set(map(str, self.cfg.get("guide_skip", []))):
                 continue
             secs.append((num, title, slugify(title), body))
+        # Buyer flow wording (Matteo's live test, 2026-11-25). Applied only while docs/GUIDE.md still has the old text:
+        # once the product guide carries the new wording this does nothing.
+        for k, (n, t, sl, body) in enumerate(secs):
+            for old, new in GUIDE_PATCH:
+                if n == "0" and old in body:
+                    secs[k] = (n, t, sl, body.replace(old, new))
         by_num = {n: "@@R@@guide/%s/" % s for n, _, s, _ in secs}
         # which relative .md links exist as site pages
         def link_md(name):
