@@ -7,6 +7,7 @@
   "portal_url": "https://polar.sh/mcode/portal",
   "support_email": "ma.codeeee@gmail.com",
   "video": "assets/media/demo.mp4",
+  "video_lights": "",
   "video_poster": "assets/media/demo_poster.jpg",
   "screenshot": "assets/media/perform.jpg",
   "screenshot_alt": "Backline in TouchDesigner: the controls screen with MIDI mapping",
@@ -39,9 +40,15 @@
     "buy_visuals_url": "Checkout link of the AV pack (Core + AV + MIDI). Empty = 'Coming soon'.",
     "buy_lights_url": "Checkout link of the Lights Control pack (Core + Lights + MIDI). Empty = 'Coming soon'.",
     "price": "Price of Full; price_visuals / price_lights of the packs; price_from = the lowest (hero button).",
-    "packs_on": "Packs on sale, in order: av, lights, full. AV-first launch (DESIGN §4 L): ['av']; add 'lights', 'full' when LIGHTS ships."
+    "packs_on": "Packs on sale, in order: av, lights, full. AV-first launch (DESIGN §4 L): ['av']; add 'lights', 'full' when LIGHTS ships.",
+    "packs_soon": "Packs shown as 'Coming soon' (no Buy link). AV-first launch: ['lights', 'full'].",
+    "video_lights": "Lights demo reel for the 'coming soon' Lights row: an embed URL or an .mp4 in this repo. Empty = no video."
   },
   "packs_on": [
     "av"
+  ],
+  "packs_soon": [
+    "lights",
+    "full"
   ]
 }

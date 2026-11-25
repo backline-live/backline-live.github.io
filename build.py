@@ -376,11 +376,32 @@ class Site:
                  "lights": ("Lights Control", c.get("price_lights", ""), "Core + Lights + MIDI", c.get("buy_lights_url")),
                  "full": ("Full", c["price"], "Core + AV + Lights + MIDI", c.get("buy_url"))}
         on = [k for k in c.get("packs_on", ["av", "lights", "full"]) if k in cards]
-        return '<div class="packs%s">%s</div>' % (" one" if len(on) == 1 else "", "".join(self.pack(*cards[k]) for k in on))
+        soon = [k for k in c.get("packs_soon", []) if k in cards and k not in on]
+        cells = [self.pack(*cards[k]) for k in on] + [self.pack(*cards[k][:3], url=None, soon=True) for k in soon]
+        return '<div class="packs%s">%s</div>' % (" one" if len(cells) == 1 else "", "".join(cells))
 
-    def pack(self, name, price, parts, url):
-        return ('<div class="pack"><h3>%s</h3><div class="amount">%s</div><p class="parts">%s</p>%s</div>'
-                % (esc(name), esc(price), parts, self.btn(url, "Buy %s" % esc(name), "buy")))
+    def pack(self, name, price, parts, url, soon=False):
+        """One price card; soon = shown but not on sale (no checkout link, 'Coming soon')."""
+        btn = self.btn(None, "", "buy", "Coming soon") if soon else self.btn(url, "Buy %s" % esc(name), "buy")
+        return ('<div class="pack%s"><h3>%s</h3><div class="amount">%s</div><p class="parts">%s</p>%s</div>'
+                % (" soon" if soon else "", esc(name), esc(price), parts, btn))
+
+    def lights_row(self):
+        """The 'what' section's Lights row, marked coming soon; its demo reel (site.json video_lights: an embed URL or an
+        .mp4 in this repo) only when set."""
+        v = self.cfg.get("video_lights", "")
+        if v.endswith(".mp4"):
+            vid = '<div class="mon sm"><video controls playsinline preload="none" src="@@R@@%s"></video></div>' % esc(v)
+        elif v:
+            vid = ('<div class="mon sm"><iframe src="%s" title="Backline Lights demo" loading="lazy" allow="fullscreen; '
+                   'picture-in-picture" allowfullscreen></iframe></div>') % esc(v)
+        else:
+            vid = ""
+        return ('<div class="row soon"><div class="nm"><h3>Lights <span class="tag-soon">coming soon</span></h3>'
+                '<span class="mono">/project1/lights</span></div><p class="say">Looks are COMPs that drive fixture groups, '
+                'played per group on program / preview. Its own pack, not in the current release.</p><ul><li>Fixtures from the '
+                'Open Fixture Library (OFL / GDTF), patch, groups, 3D stage</li><li>Flash, solo, kill; strobe, blinder, black'
+                '</li><li>DMX out over USB, Art-Net or sACN</li></ul>%s</div>' % vid)
 
     def trial(self):
         return self.btn(self.cfg.get("trial_url"), "Try free for %s days" % self.cfg["trial_days"], "",
@@ -482,7 +503,7 @@ class Site:
         shot = ('<figure class="shot" style="margin-inline:0"><img src="@@R@@%s" alt="%s" width="%d" height="%d" loading="lazy">'
                 '</figure>' % (esc(s), esc(alt), w, h)) if s else ""
         rep = {"%%BUY_BTN%%": self.buy(), "%%BUY_BTN_PRICE%%": self.btn(c.get("buy_url"), "Buy on Polar", "buy"),
-               "%%PACKS%%": self.packs(),
+               "%%PACKS%%": self.packs(), "%%LIGHTS_ROW%%": self.lights_row(),
                "%%TRIAL_BTN%%": self.trial(), "%%VIDEO%%": video, "%%SCREENSHOT%%": shot,
                "%%GRACE%%": str(c["grace_days"]), "%%PRICE%%": esc(c["price"]), "%%TRIAL_DAYS%%": str(c["trial_days"])}
         for k, val in rep.items():

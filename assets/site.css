@@ -226,6 +226,11 @@ code { color: var(--t-1); background: var(--bg-2); border: 1px solid var(--seam)
 .packs + .price { margin-top: 16px; }
 @media (max-width: 759px) { .packs { grid-template-columns: minmax(0, 1fr); } }
 .packs.one { grid-template-columns: minmax(0, 420px); }
+.pack.soon { background: transparent; border-style: dashed; }
+.pack.soon .amount, .pack.soon h3 { color: var(--t-3); }
+.tag-soon { margin-left: 8px; padding: 1px 6px; border: 1px solid var(--line-2); border-radius: 4px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--t-2); vertical-align: middle; }
+.row.soon .say, .row.soon ul { color: var(--t-3); }
+.mon.sm { margin-top: 14px; max-width: 560px; }
 
 /* ---------- footer ---------- */
 .foot { margin-top: var(--sec); border-top: 1px solid var(--seam); padding: 48px 0 40px; background: var(--bg-0); font-size: 15px; }
