@@ -47,7 +47,8 @@ GUIDE_PATCH = [(
     "1. Get the system: `git clone` the repo into any folder you like (for example `~/Documents/av_infrastructure`).",
     "1. Get the files: after the purchase (or the free trial), open the order email and press **Access purchase**: this is your "
     "Polar customer portal. There press **Connect GitHub** (your own GitHub account): GitHub invites you to the private release "
-    "repository. Accept the invitation (GitHub email, or github.com/notifications), then `git clone` the repository into any "
+    "repository. Accept the invitation (GitHub email, or github.com/notifications), then download `Backline-<version>.zip` from the "
+    "repository's Releases and unzip it, or `git clone` the repository, into any "
     "folder you like (for example `~/Documents/backline`). Your licence key is shown in the same portal and in the order email "
     "(the free trial gets a key too, valid 14 days).")]
 
