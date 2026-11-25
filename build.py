@@ -395,7 +395,9 @@ class Site:
                                                       ' aria-current="page"' if k == current else "", t)
                           for t, h, k in nav)
         sheet = "".join('<a href="%s">%s</a>' % (root + h, t) for t, h, k in nav)
-        buy = self.btn(self.cfg.get("buy_url"), 'Buy<span class="hp">&nbsp;· %s</span>' % esc(self.cfg["price"]), "buy sm")
+        # header Buy -> the price cards (the packs on sale decide the price), never one product's checkout
+        buy = '<a class="btn buy sm" href="%sindex.html#buy">Buy<span class="hp">&nbsp;· from %s</span></a>' % (
+            root, esc(self.cfg.get("price_from") or self.cfg["price"]))
         return ('<header class="head"><div class="wrap">'
                 '<a class="mark" href="%s" aria-label="Backline, home">%s Backline</a>'
                 '<nav class="nav" aria-label="Main">%s</nav><span class="spacer"></span>%s'
@@ -408,8 +410,7 @@ class Site:
         mail = ('<a href="mailto:%s">%s</a>' % (esc(c["support_email"]), esc(c["support_email"]))
                 if c.get("support_email") else '<a href="%ssupport/">Contact</a>' % root)
         portal = ('<li><a href="%s" rel="noopener">Customer portal</a></li>' % esc(c["portal_url"])) if c.get("portal_url") else ""
-        buy = ('<li><a href="%s" rel="noopener">Buy</a></li>' % esc(c["buy_url"])) if c.get("buy_url") else \
-            '<li><a href="%sindex.html#buy">Buy</a></li>' % root
+        buy = '<li><a href="%sindex.html#buy">Buy</a></li>' % root
         return ('<footer class="foot"><div class="wrap">'
                 '<div class="about"><a class="mark" href="%(r)s%(home)s">%(m)s Backline</a>'
                 '<p class="small">Built and played live by %(o)s, Paris.</p></div>'
