@@ -225,6 +225,7 @@ code { color: var(--t-1); background: var(--bg-2); border: 1px solid var(--seam)
 .pack .btn { width: 100%; }
 .packs + .price { margin-top: 16px; }
 @media (max-width: 759px) { .packs { grid-template-columns: minmax(0, 1fr); } }
+.packs.one { grid-template-columns: minmax(0, 420px); }
 
 /* ---------- footer ---------- */
 .foot { margin-top: var(--sec); border-top: 1px solid var(--seam); padding: 48px 0 40px; background: var(--bg-0); font-size: 15px; }

@@ -3,10 +3,9 @@
   <section class="hero" aria-labelledby="h-hero">
     <div class="wrap">
       <div>
-        <h1 id="h-hero">Play visuals and lights live, from one controller.</h1>
-        <p class="lead">A show system for TouchDesigner. Your scenes, effects and light looks stay TouchDesigner nodes you
-          open and edit; one preview / program transport takes the picture and the rig together, and MIDI Learn puts any of
-          it on any knob.</p>
+        <h1 id="h-hero">Play your TouchDesigner visuals live, from one controller.</h1>
+        <p class="lead">A show system for TouchDesigner. Your scenes and effects stay TouchDesigner nodes you open and
+          edit; a preview / program transport takes them to air, and MIDI Learn puts any of it on any knob.</p>
         <div class="acts">
           %%BUY_BTN%%
           %%TRIAL_BTN%%
@@ -16,7 +15,7 @@
       <div id="demo">
         %%VIDEO%%
         <div class="status" aria-hidden="true">
-          <span><span class="dot"></span>LCXL MK2 · page AV</span><span>APC mini · page LIGHTS</span><span class="r">60 / 60 fps</span>
+          <span><span class="dot"></span>LCXL MK2 · page AV</span><span>APC mini · page AV</span><span class="r">60 / 60 fps</span>
         </div>
       </div>
     </div>
@@ -24,18 +23,13 @@
 
   <section class="sec" id="what" aria-labelledby="h-what">
     <div class="wrap">
-      <h2 id="h-what">Four parts. Drag in the ones your show needs.</h2>
-      <p class="lead">Each part is one <code>.tox</code>. Core comes first; then visuals only, lights only, or both.</p>
+      <h2 id="h-what">Three parts. Drag them into any project.</h2>
+      <p class="lead">Each part is one <code>.tox</code>: Core first, then AV and MIDI. Lights (fixtures, DMX) comes later as its own pack.</p>
       <div class="spec">
         <div class="row">
           <div class="nm"><h3>AV</h3><span class="mono">/project1/av</span></div>
           <p class="say">Scenes and effects are COMPs in your project, picked up automatically and played on preview / program.</p>
           <ul><li>T-bar, AUTO, CUT, master, fade to black</li><li>Effects on their own bus, with their own transition</li><li>Scene parameters become controls on the page</li></ul>
-        </div>
-        <div class="row">
-          <div class="nm"><h3>Lights</h3><span class="mono">/project1/lights</span></div>
-          <p class="say">Looks are COMPs that drive fixture groups. Play them per group, in a looks × groups grid, with a GO for everything cued.</p>
-          <ul><li>Fixtures from the Open Fixture Library (OFL / GDTF), patch, groups, 3D stage</li><li>Flash, solo, kill; strobe, blinder, black</li><li>DMX out over USB, Art-Net or sACN (off until you switch it on)</li></ul>
         </div>
         <div class="row">
           <div class="nm"><h3>MIDI</h3><span class="mono">/project1/midi</span></div>
@@ -58,7 +52,7 @@
       %%SCREENSHOT%%
       <div class="cap">
         <p><b>Visuals</b>Program, preview, T-bar; scenes and effects as tiles.</p>
-        <p><b>Lights</b>Rig on program and preview; looks × groups grid with GO.</p>
+        <p><b>Parameters</b>The controls of what is on air, ready for a knob.</p>
         <p><b>Status</b>Controllers and their pages, the last MIDI move, fps.</p>
       </div>
     </div>
@@ -68,18 +62,15 @@
     <div class="wrap split">
       <div>
         <h2 id="h-nodes">Your show stays a TouchDesigner network.</h2>
-        <p class="lead">No black box: a scene is a COMP with an output, a look is a COMP with an <code>out1</code> CHOP. Open one mid-show and change it; the system only does the plumbing.</p>
+        <p class="lead">No black box: a scene is a COMP with an <code>out1</code>, an effect a COMP with an <code>in1</code> and an <code>out1</code>. Open one mid-show and change it; the system only does the plumbing.</p>
         <p class="muted">Bring scenes you already have: drop them in <code>scenes</code>, they appear on the page.</p>
       </div>
 <pre class="tree" aria-label="Project structure"><span class="y">/project1</span>
  ├─ core       <span class="muted">the page, lock, clock, show files</span>
  ├─ av         <span class="muted">preview / program for visuals</span>
- ├─ lights     <span class="muted">fixtures, patch, DMX out</span>
  ├─ midi       <span class="muted">controllers, Learn, LEDs</span>
  ├─ <span class="c">scenes</span>     <span class="muted">your scenes · one COMP each</span>
- ├─ <span class="c">effects</span>    <span class="muted">your effects</span>
- ├─ <span class="c">looks</span>      <span class="muted">your light looks · out1 CHOP</span>
- └─ <span class="c">lightfx</span>    <span class="muted">your light effects</span></pre>
+ └─ <span class="c">effects</span>    <span class="muted">your effects</span></pre>
     </div>
   </section>
 
@@ -91,7 +82,7 @@
           <h3>For you if</h3>
           <ul>
             <li>You make your own visuals in TouchDesigner and want to play them like an instrument.</li>
-            <li>You run the visuals and a few lights yourself, at the gig, from a MIDI controller.</li>
+            <li>You run the visuals yourself, at the gig, from a MIDI controller.</li>
             <li>You improvise: the next scene is decided in the room, not on a timeline.</li>
           </ul>
         </div>
@@ -113,7 +104,6 @@
         <dt>TouchDesigner</dt><dd>2025 builds.</dd>
         <dt>Computer</dt><dd>macOS or Windows, any machine that runs TouchDesigner 2025 well.</dd>
         <dt>Controller</dt><dd>Optional. Any MIDI controller; the computer keyboard works too.</dd>
-        <dt>Lights</dt><dd>Optional. A USB DMX interface, or Art-Net / sACN nodes on the network.</dd>
         <dt>Internet</dt><dd>To clone the files and activate once. Then offline for %%GRACE%% days between checks: gigs without network are fine.</dd>
       </dl>
     </div>
@@ -135,18 +125,18 @@
 
   <section class="sec" id="buy" aria-labelledby="h-buy">
     <div class="wrap">
-      <h2 id="h-buy">Pick what you play.</h2>
-      <div class="packs">%%PACKS%%</div>
+      <h2 id="h-buy">One pack, everything you need to play visuals.</h2>
+      %%PACKS%%
       <div class="price">
         <div class="a">
           <p class="terms">Every pack: perpetual licence · 1 year of updates included · 2 computers. Own a pack and want both? Write to us for an upgrade code to Full (you pay the difference).</p>
           <div class="acts">%%TRIAL_BTN%%</div>
-          <p class="small">Payment, VAT and invoice by Polar (merchant of record). Licence terms: <a href="@@R@@eula/">EULA</a>; right of withdrawal and refunds: <a href="@@R@@terms/">Terms of sale</a>. <span id="trial">Free trial: %%TRIAL_DAYS%% days with a trial key. Order the free trial product on Polar (nothing to pay): same portal, same GitHub step. The trial runs with a watermark, output up to 1280×720, 8 fixtures on one universe, and no saving of show files or snapshots. Buy to remove the limits; a paid licence never locks during a gig.</span></p>
+          <p class="small">Payment, VAT and invoice by Polar (merchant of record). Licence terms: <a href="@@R@@eula/">EULA</a>; right of withdrawal and refunds: <a href="@@R@@terms/">Terms of sale</a>. <span id="trial">Free trial: %%TRIAL_DAYS%% days with a trial key. Order the free trial product on Polar (nothing to pay): same portal, same GitHub step. The trial runs with a watermark, output up to 1280×720, and no saving of show files or snapshots. Buy to remove the limits; a paid licence never locks during a gig.</span></p>
         </div>
         <div class="b">
           <ul>
-            <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><div>Core and MIDI in every pack<br><span>AV adds the visuals, Lights Control adds LIGHTS, Full has both</span></div></li>
-            <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><div>Demo scenes, effects and looks<br><span>a project that plays on first open</span></div></li>
+            <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><div>Core + AV + MIDI<br><span>everything in this release; Lights comes later (upgrade price for AV owners)</span></div></li>
+            <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><div>Demo scenes and effects<br><span>a project that plays on first open</span></div></li>
             <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><div>Controller profiles and library<br><span>LCXL MK2, APC mini, LPD8, keyboard + 27 models</span></div></li>
             <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><div>The guide and support by email<br><span>from the person who plays it live</span></div></li>
           </ul>

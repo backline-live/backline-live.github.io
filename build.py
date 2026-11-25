@@ -369,6 +369,15 @@ class Site:
         """Hero button: to the price cards (three packs)."""
         return '<a class="btn %s" href="#buy">Buy · from %s</a>' % (cls, esc(self.cfg.get("price_from") or self.cfg["price"]))
 
+    def packs(self):
+        """The price cards of the packs on sale (site.json packs_on; AV-first launch: only av)."""
+        c = self.cfg
+        cards = {"av": ("AV", c.get("price_visuals", ""), "Core + AV + MIDI", c.get("buy_visuals_url")),
+                 "lights": ("Lights Control", c.get("price_lights", ""), "Core + Lights + MIDI", c.get("buy_lights_url")),
+                 "full": ("Full", c["price"], "Core + AV + Lights + MIDI", c.get("buy_url"))}
+        on = [k for k in c.get("packs_on", ["av", "lights", "full"]) if k in cards]
+        return '<div class="packs%s">%s</div>' % (" one" if len(on) == 1 else "", "".join(self.pack(*cards[k]) for k in on))
+
     def pack(self, name, price, parts, url):
         return ('<div class="pack"><h3>%s</h3><div class="amount">%s</div><p class="parts">%s</p>%s</div>'
                 % (esc(name), esc(price), parts, self.btn(url, "Buy %s" % esc(name), "buy")))
@@ -467,20 +476,18 @@ class Site:
             video = ('<div class="mon"><div class="slot"><span class="note">Demo video coming soon</span></div>'
                      '<span class="tag pgm"><b>PGM</b> demo reel</span></div>')
         s = c.get("screenshot", "")
-        alt = c.get("screenshot_alt") or "The PERFORM screen: program and preview, scenes and effects, lights grid, status bar"
+        alt = c.get("screenshot_alt") or "The PERFORM screen: program and preview, scenes and effects, parameters, status bar"
         w, h = img_size(HERE / s) if s else (1920, 1080)
         shot = ('<figure class="shot" style="margin-inline:0"><img src="@@R@@%s" alt="%s" width="%d" height="%d" loading="lazy">'
                 '</figure>' % (esc(s), esc(alt), w, h)) if s else ""
         rep = {"%%BUY_BTN%%": self.buy(), "%%BUY_BTN_PRICE%%": self.btn(c.get("buy_url"), "Buy on Polar", "buy"),
-               "%%PACKS%%": self.pack("AV", c.get("price_visuals", ""), "Core + AV + MIDI", c.get("buy_visuals_url"))
-               + self.pack("Lights Control", c.get("price_lights", ""), "Core + Lights + MIDI", c.get("buy_lights_url"))
-               + self.pack("Full", c["price"], "Core + AV + Lights + MIDI", c.get("buy_url")),
+               "%%PACKS%%": self.packs(),
                "%%TRIAL_BTN%%": self.trial(), "%%VIDEO%%": video, "%%SCREENSHOT%%": shot,
                "%%GRACE%%": str(c["grace_days"]), "%%PRICE%%": esc(c["price"]), "%%TRIAL_DAYS%%": str(c["trial_days"])}
         for k, val in rep.items():
             t = t.replace(k, val)
-        self.page("index.html", "Backline · play visuals and lights live from one controller",
-                  "Backline: a show system for TouchDesigner. Visuals, lights and MIDI on one preview / program transport. "
+        self.page("index.html", "Backline · play your TouchDesigner visuals live from one controller",
+                  "Backline: a show system for TouchDesigner. Scenes, effects and MIDI on one preview / program transport. "
                   "From %s, perpetual licence, 14-day free trial." % (c.get("price_from") or c["price"]), t)
 
     def support(self):

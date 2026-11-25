@@ -38,6 +38,10 @@
     "screenshot_alt": "Alt text of the screenshot (what it shows). Empty = default PERFORM description.",
     "buy_visuals_url": "Checkout link of the AV pack (Core + AV + MIDI). Empty = 'Coming soon'.",
     "buy_lights_url": "Checkout link of the Lights Control pack (Core + Lights + MIDI). Empty = 'Coming soon'.",
-    "price": "Price of Full; price_visuals / price_lights of the packs; price_from = the lowest (hero button)."
-  }
+    "price": "Price of Full; price_visuals / price_lights of the packs; price_from = the lowest (hero button).",
+    "packs_on": "Packs on sale, in order: av, lights, full. AV-first launch (DESIGN §4 L): ['av']; add 'lights', 'full' when LIGHTS ships."
+  },
+  "packs_on": [
+    "av"
+  ]
 }
