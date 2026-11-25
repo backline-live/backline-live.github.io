@@ -365,8 +365,12 @@ class Site:
         return '<span class="btn %s is-soon" title="The store opens soon">%s</span>' % (cls, soon_label)
 
     def buy(self, cls="buy", price=True):
-        label = "Buy · %s" % self.cfg["price"]
-        return self.btn(self.cfg.get("buy_url"), label, cls)
+        """Hero button: to the price cards (three packs)."""
+        return '<a class="btn %s" href="#buy">Buy · from %s</a>' % (cls, esc(self.cfg.get("price_from") or self.cfg["price"]))
+
+    def pack(self, name, price, parts, url):
+        return ('<div class="pack"><h3>%s</h3><div class="amount">%s</div><p class="parts">%s</p>%s</div>'
+                % (esc(name), esc(price), parts, self.btn(url, "Buy %s" % esc(name), "buy")))
 
     def trial(self):
         return self.btn(self.cfg.get("trial_url"), "Try free for %s days" % self.cfg["trial_days"], "",
@@ -467,13 +471,16 @@ class Site:
         shot = ('<figure class="shot" style="margin-inline:0"><img src="@@R@@%s" alt="%s" width="%d" height="%d" loading="lazy">'
                 '</figure>' % (esc(s), esc(alt), w, h)) if s else ""
         rep = {"%%BUY_BTN%%": self.buy(), "%%BUY_BTN_PRICE%%": self.btn(c.get("buy_url"), "Buy on Polar", "buy"),
+               "%%PACKS%%": self.pack("AV", c.get("price_visuals", ""), "Core + AV + MIDI", c.get("buy_visuals_url"))
+               + self.pack("Lights Control", c.get("price_lights", ""), "Core + Lights + MIDI", c.get("buy_lights_url"))
+               + self.pack("Full", c["price"], "Core + AV + Lights + MIDI", c.get("buy_url")),
                "%%TRIAL_BTN%%": self.trial(), "%%VIDEO%%": video, "%%SCREENSHOT%%": shot,
                "%%GRACE%%": str(c["grace_days"]), "%%PRICE%%": esc(c["price"]), "%%TRIAL_DAYS%%": str(c["trial_days"])}
         for k, val in rep.items():
             t = t.replace(k, val)
         self.page("index.html", "Backline · play visuals and lights live from one controller",
                   "Backline: a show system for TouchDesigner. Visuals, lights and MIDI on one preview / program transport. "
-                  "%s, perpetual licence, 14-day free trial." % c["price"], t)
+                  "From %s, perpetual licence, 14-day free trial." % (c.get("price_from") or c["price"]), t)
 
     def support(self):
         c = self.cfg

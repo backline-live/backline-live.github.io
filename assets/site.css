@@ -217,6 +217,15 @@ code { color: var(--t-1); background: var(--bg-2); border: 1px solid var(--seam)
 .price li span { color: var(--t-2); }
 @media (max-width: 759px) { .price { grid-template-columns: minmax(0, 1fr); } .price .b { border-left: 0; border-top: 1px solid var(--line); } .price .acts { max-width: none; } }
 
+/* three packs (Visuals / Lights / Full) above the shared terms */
+.packs { margin-top: 40px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.pack { padding: clamp(20px, 3vw, 32px); background: var(--bg-1); border: 1px solid var(--line-2); border-radius: var(--r-3); display: grid; gap: 10px; align-content: start; }
+.pack h3 { margin: 0; color: var(--t-2); font-size: 15px; letter-spacing: .04em; text-transform: uppercase; }
+.pack .parts { margin: 0 0 8px; color: var(--t-2); }
+.pack .btn { width: 100%; }
+.packs + .price { margin-top: 16px; }
+@media (max-width: 759px) { .packs { grid-template-columns: minmax(0, 1fr); } }
+
 /* ---------- footer ---------- */
 .foot { margin-top: var(--sec); border-top: 1px solid var(--seam); padding: 48px 0 40px; background: var(--bg-0); font-size: 15px; }
 .foot .wrap { display: grid; grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr)); gap: 32px; }

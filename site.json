@@ -1,6 +1,8 @@
 {
   "_doc": "ONE config file for the site. After editing, run: python3 build.py   (then commit + push). An empty link = its button shows 'Coming soon'. Nothing here is secret: all of it is public on the site.",
   "buy_url": "https://buy.polar.sh/polar_cl_4b4DLxb6pcuyNcsvIT9KgUtg0guuQCgYWkU6e1n8egt",
+  "buy_visuals_url": "",
+  "buy_lights_url": "",
   "trial_url": "https://buy.polar.sh/polar_cl_mqNf4KJNM6JNfPQt6KQTy71zm9UeWYrdqAbTS3FO24c",
   "portal_url": "https://polar.sh/mcode/portal",
   "support_email": "ma.codeeee@gmail.com",
@@ -11,7 +13,10 @@
   "site_url": "https://backline-live.github.io",
   "base_path": "",
   "owner": "mcode visuals",
-  "price": "€50",
+  "price": "€60",
+  "price_visuals": "€40",
+  "price_lights": "€40",
+  "price_from": "€40",
   "trial_days": 14,
   "grace_days": 30,
   "legal_draft": true,
@@ -19,7 +24,7 @@
     "7"
   ],
   "_notes": {
-    "buy_url": "Polar checkout link of the paid product (sandbox first, then live). Set the checkout's success URL to <site>/thanks/.",
+    "buy_url": "Polar checkout link of the FULL product (€60, all parts). Set the checkout's success URL to <site>/thanks/.",
     "trial_url": "Polar checkout link of the free (EUR 0) trial product: it gives access to the private repository.",
     "portal_url": "Polar customer portal (buyers free a computer, see their key). Same value as portal_url in core/license.json of the product.",
     "support_email": "Public support address. Empty = the support page says it is coming and points to the in-app report.",
@@ -30,6 +35,9 @@
     "legal_draft": "true = the EULA / privacy / terms pages show a 'draft, being checked by a lawyer' note. Set false only when the lawyer's OK is in writing (G4).",
     "guide_skip": "Guide section numbers left out of the site (7 = internal known open points).",
     "video_poster": "Still image shown before the .mp4 video plays (path inside this repo). Empty = black frame.",
-    "screenshot_alt": "Alt text of the screenshot (what it shows). Empty = default PERFORM description."
+    "screenshot_alt": "Alt text of the screenshot (what it shows). Empty = default PERFORM description.",
+    "buy_visuals_url": "Checkout link of the AV pack (Core + AV + MIDI). Empty = 'Coming soon'.",
+    "buy_lights_url": "Checkout link of the Lights Control pack (Core + Lights + MIDI). Empty = 'Coming soon'.",
+    "price": "Price of Full; price_visuals / price_lights of the packs; price_from = the lowest (hero button)."
   }
 }
