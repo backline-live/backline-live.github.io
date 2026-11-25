@@ -1,6 +1,6 @@
 {
   "_doc": "ONE config file for the site. After editing, run: python3 build.py   (then commit + push). An empty link = its button shows 'Coming soon'. Nothing here is secret: all of it is public on the site.",
-  "buy_url": "",
+  "buy_url": "https://buy.polar.sh/polar_cl_4b4DLxb6pcuyNcsvIT9KgUtg0guuQCgYWkU6e1n8egt",
   "trial_url": "",
   "portal_url": "",
   "support_email": "",
@@ -13,7 +13,9 @@
   "trial_days": 14,
   "grace_days": 30,
   "legal_draft": true,
-  "guide_skip": ["7"],
+  "guide_skip": [
+    "7"
+  ],
   "_notes": {
     "buy_url": "Polar checkout link of the paid product (sandbox first, then live). Set the checkout's success URL to <site>/thanks/.",
     "trial_url": "Polar checkout link of the free (EUR 0) trial product: it gives access to the private repository.",
