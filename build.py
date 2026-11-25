@@ -49,7 +49,7 @@ GUIDE_PATCH = [(
     "Polar customer portal. There press **Connect GitHub** (your own GitHub account): GitHub invites you to the private release "
     "repository. Accept the invitation (GitHub email, or github.com/notifications), then `git clone` the repository into any "
     "folder you like (for example `~/Documents/backline`). Your licence key is shown in the same portal and in the order email "
-    "(the free trial has no key).")]
+    "(the free trial gets a key too, valid 14 days).")]
 
 
 # ------------------------------------------------------------------ markdown (the subset the docs use)
