@@ -1,8 +1,8 @@
 {
   "_doc": "ONE config file for the site. After editing, run: python3 build.py   (then commit + push). An empty link = its button shows 'Coming soon'. Nothing here is secret: all of it is public on the site.",
   "buy_url": "https://buy.polar.sh/polar_cl_4b4DLxb6pcuyNcsvIT9KgUtg0guuQCgYWkU6e1n8egt",
-  "buy_visuals_url": "",
-  "buy_lights_url": "",
+  "buy_visuals_url": "https://buy.polar.sh/polar_cl_gRqwdO58HkOs1Ch0sTXiYRWDUfpCUZ5S4SfiK3E9YJv",
+  "buy_lights_url": "https://buy.polar.sh/polar_cl_bqTBoWjj3rQ9HSVwQSnivh28tl8rJ8YmYU6AO3vWjz7",
   "trial_url": "https://buy.polar.sh/polar_cl_mqNf4KJNM6JNfPQt6KQTy71zm9UeWYrdqAbTS3FO24c",
   "portal_url": "https://polar.sh/mcode/portal",
   "support_email": "ma.codeeee@gmail.com",
