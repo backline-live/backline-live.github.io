@@ -1,4 +1,4 @@
-/* Backline site. Tokens copied from the product (shared/web/tokens.css, theme umber); layout from the approved mock (docs/mocks/site.html). */
+/* ziptie site. Tokens copied from the product (shared/web/tokens.css, theme umber); layout from the approved mock (docs/mocks/site.html). */
 :root {  /* product tokens */
   /* ---- state (constant) ---- */
   --pgm: #ff453a;  --pgm-bg: rgba(255, 69, 58, .12);  --pgm-line: rgba(255, 69, 58, .7);

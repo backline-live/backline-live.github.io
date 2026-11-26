@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Backline site generator. Plain Python 3, standard library only.
+"""ziptie site generator. Plain Python 3, standard library only.
 
     python3 build.py                       # docs from ../av_infrastructure, store links from site.json
     python3 build.py --source /path/to/av_infrastructure
@@ -19,9 +19,9 @@ LEGAL = [  # key, source file, page title, nav label
     ("terms", "TERMS_OF_SALE.md", "Terms of sale", "Terms of sale"),
 ]
 LEGAL_REF = {"EULA.md": "eula", "PRIVACY.md": "privacy", "TERMS_OF_SALE.md": "terms"}
-MARK = ('<svg viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect x="1" y="4" width="9" height="14" rx="1.5" '
-        'stroke="#ff453a" stroke-width="1.6"/><rect x="12" y="4" width="9" height="14" rx="1.5" stroke="#32d74b" '
-        'stroke-width="1.6"/></svg>')
+# the logo next to the name (header, footer, 404): assets/logo.svg, inlined. Replace that file to change it
+# (square viewBox; the favicon is assets/favicon.svg).
+MARK = (HERE / "assets" / "logo.svg").read_text(encoding="utf-8").strip().replace("<svg ", '<svg aria-hidden="true" ', 1)
 esc = html.escape
 
 
@@ -47,9 +47,9 @@ GUIDE_PATCH = [(
     "1. Get the system: `git clone` the repo into any folder you like (for example `~/Documents/av_infrastructure`).",
     "1. Get the files: after the purchase (or the free trial), open the order email and press **Access purchase**: this is your "
     "Polar customer portal. There press **Connect GitHub** (your own GitHub account): GitHub invites you to the private release "
-    "repository. Accept the invitation (GitHub email, or github.com/notifications), then download `Backline-<version>.zip` from the "
+    "repository. Accept the invitation (GitHub email, or github.com/notifications), then download `ziptie-<version>.zip` from the "
     "repository's Releases and unzip it, or `git clone` the repository, into any "
-    "folder you like (for example `~/Documents/backline`). Your licence key is shown in the same portal and in the order email "
+    "folder you like (for example `~/Documents/ziptie`). Your licence key is shown in the same portal and in the order email "
     "(the free trial gets a key too, valid 14 days).")]
 
 
@@ -393,7 +393,7 @@ class Site:
         if v.endswith(".mp4"):
             vid = '<div class="mon sm"><video controls playsinline preload="none" src="@@R@@%s"></video></div>' % esc(v)
         elif v:
-            vid = ('<div class="mon sm"><iframe src="%s" title="Backline Lights demo" loading="lazy" allow="fullscreen; '
+            vid = ('<div class="mon sm"><iframe src="%s" title="ziptie Lights demo" loading="lazy" allow="fullscreen; '
                    'picture-in-picture" allowfullscreen></iframe></div>') % esc(v)
         else:
             vid = ""
@@ -420,7 +420,7 @@ class Site:
         buy = '<a class="btn buy sm" href="%sindex.html#buy">Buy<span class="hp">&nbsp;· from %s</span></a>' % (
             root, esc(self.cfg.get("price_from") or self.cfg["price"]))
         return ('<header class="head"><div class="wrap">'
-                '<a class="mark" href="%s" aria-label="Backline, home">%s Backline</a>'
+                '<a class="mark" href="%s" aria-label="ziptie, home">%s ziptie</a>'
                 '<nav class="nav" aria-label="Main">%s</nav><span class="spacer"></span>%s'
                 '<details class="menu"><summary aria-label="Menu"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">'
                 '<path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></summary>'
@@ -433,7 +433,7 @@ class Site:
         portal = ('<li><a href="%s" rel="noopener">Customer portal</a></li>' % esc(c["portal_url"])) if c.get("portal_url") else ""
         buy = '<li><a href="%sindex.html#buy">Buy</a></li>' % root
         return ('<footer class="foot"><div class="wrap">'
-                '<div class="about"><a class="mark" href="%(r)s%(home)s">%(m)s Backline</a>'
+                '<div class="about"><a class="mark" href="%(r)s%(home)s">%(m)s ziptie</a>'
                 '<p class="small">Built and played live by %(o)s, Paris.</p></div>'
                 '<div><h3>Product</h3><ul><li><a href="%(r)sguide/">Guide</a></li><li><a href="%(r)schangelog/">Changelog</a></li>'
                 '<li><a href="%(r)sindex.html#requirements">Requirements</a></li>%(buy)s</ul></div>'
@@ -479,7 +479,7 @@ class Site:
         body = ('<main id="main" class="docs"><nav class="side" aria-label="Pages">%s</nav><article class="doc">%s'
                 '<h1>%s</h1>%s%s%s%s</article>%s</main>') % (
             side_html, menu, esc(title), ('<p class="lead">%s</p>' % lead) if lead else "", extra_top, article, pager_html, toc_html)
-        self.page(rel, "%s · Backline" % title, desc or re.sub(r"<[^>]+>", "", lead) or title, body, current)
+        self.page(rel, "%s · ziptie" % title, desc or re.sub(r"<[^>]+>", "", lead) or title, body, current)
 
     # ---- landing + small pages
     def landing(self):
@@ -492,7 +492,7 @@ class Site:
             video = ('<div class="mon"><video controls playsinline preload="none"%s src="@@R@@%s"></video>'
                      '<span class="tag pgm"><b>PGM</b> demo reel</span></div>') % (poster, esc(v))
         elif v:
-            video = ('<div class="mon"><iframe src="%s" title="Backline demo video" loading="lazy" allow="fullscreen; picture-in-picture" '
+            video = ('<div class="mon"><iframe src="%s" title="ziptie demo video" loading="lazy" allow="fullscreen; picture-in-picture" '
                      'allowfullscreen></iframe><span class="tag pgm"><b>PGM</b> demo reel</span></div>') % esc(v)
         else:
             video = ('<div class="mon"><div class="slot"><span class="note">Demo video coming soon</span></div>'
@@ -508,8 +508,8 @@ class Site:
                "%%GRACE%%": str(c["grace_days"]), "%%PRICE%%": esc(c["price"]), "%%TRIAL_DAYS%%": str(c["trial_days"])}
         for k, val in rep.items():
             t = t.replace(k, val)
-        self.page("index.html", "Backline · play your TouchDesigner visuals live from one controller",
-                  "Backline: a show system for TouchDesigner. Scenes, effects and MIDI on one preview / program transport. "
+        self.page("index.html", "ziptie · play your TouchDesigner visuals live from one controller",
+                  "ziptie: a show system for TouchDesigner. Scenes, effects and MIDI on one preview / program transport. "
                   "From %s, perpetual licence, 14-day free trial." % (c.get("price_from") or c["price"]), t)
 
     def support(self):
@@ -520,20 +520,20 @@ class Site:
         portal = ('<p><a class="btn sm" href="%s" rel="noopener">Open the customer portal</a></p>' % esc(c["portal_url"])
                   if c.get("portal_url") else '<p class="muted">Customer portal link: coming soon.</p>')
         t = t.replace("%%SUPPORT_MAIL%%", mail).replace("%%PORTAL%%", portal)
-        self.page("support/index.html", "Support · Backline", "Backline support: email, in-app problem report, licence and computers.", t, "support")
+        self.page("support/index.html", "Support · ziptie", "ziptie support: email, in-app problem report, licence and computers.", t, "support")
 
     def thanks(self):
         t = (HERE / "templates" / "thanks.html").read_text(encoding="utf-8")
-        self.page("thanks/index.html", "Thank you · Backline", "Your Backline order: what happens next.", t, noindex=True, sitemap=False)
+        self.page("thanks/index.html", "Thank you · ziptie", "Your ziptie order: what happens next.", t, noindex=True, sitemap=False)
 
     def notfound(self):
         bp = self.cfg.get("base_path", "").rstrip("/")
         body = ('<main id="main" class="docs" style="grid-template-columns:minmax(0,var(--read))"><article class="doc"><h1>Page not found</h1>'
-                '<p class="lead">This page does not exist. <a href="%s/">Back to the Backline home page</a>.</p></article></main>') % bp
+                '<p class="lead">This page does not exist. <a href="%s/">Back to the ziptie home page</a>.</p></article></main>') % bp
         doc = ('<!doctype html>\n<html lang="en" data-theme="umber"><head><meta charset="utf-8">'
                '<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">'
-               '<title>Page not found · Backline</title><link rel="stylesheet" href="%s/assets/site.css"></head><body>'
-               '<header class="head"><div class="wrap"><a class="mark" href="%s/">%s Backline</a></div></header>%s</body></html>\n') % (
+               '<title>Page not found · ziptie</title><link rel="stylesheet" href="%s/assets/site.css"></head><body>'
+               '<header class="head"><div class="wrap"><a class="mark" href="%s/">%s ziptie</a></div></header>%s</body></html>\n') % (
             bp, bp, MARK, body)
         self.write("404.html", doc, sitemap=False)
 
@@ -591,7 +591,7 @@ class Site:
         self.doc_page("guide/index.html", "Guide", "",
                       article.replace("@@R@@", "../"), [x.replace("@@R@@", "../") for x in side_for("")], [], "guide",
                       pager=tuple(((a[0].replace("@@R@@", "../"), a[1]) if a else None) for a in pager_for(0)),
-                      desc="Backline guide: how the system is put together, how to play a show, how to add your own scenes, effects, fixtures and controllers.",
+                      desc="ziptie guide: how the system is put together, how to play a show, how to add your own scenes, effects, fixtures and controllers.",
                       side_title="Guide contents")
         for k, (n, t, s, body) in enumerate(secs, start=1):
             md = Md(link_md=link_md, section_ref=section_ref, h_offset=-1)
@@ -601,7 +601,7 @@ class Site:
             self.doc_page("guide/%s/index.html" % s, t, lead, html_body.replace("@@R@@", "../../"),
                           [x.replace("@@R@@", "../../") for x in side_for(s)], toc, "guide",
                           pager=tuple(((a[0].replace("@@R@@", "../../"), a[1]) if a else None) for a in pager_for(k)),
-                          desc="Backline guide: %s." % t, side_title="Guide contents")
+                          desc="ziptie guide: %s." % t, side_title="Guide contents")
         self.guide = secs
 
     # ---- changelog
@@ -646,7 +646,7 @@ class Site:
         doc = ('<main id="main" class="docs"><nav class="side" aria-label="Versions">%s</nav><article class="doc">'
                '<details class="doc-menu"><summary>Versions</summary><nav class="side" aria-label="Versions (phone)">%s</nav></details>'
                '<h1>Changelog</h1><p class="lead">%s</p>%s</article>%s</main>') % (side[0], side[0], lead, body, toc_note)
-        self.page("changelog/index.html", "Changelog · Backline", "Every Backline release, newest first: fixed, added, changed, file formats.", doc, "changelog")
+        self.page("changelog/index.html", "Changelog · ziptie", "Every ziptie release, newest first: fixed, added, changed, file formats.", doc, "changelog")
 
     # ---- legal
     def build_legal(self):
@@ -674,7 +674,7 @@ class Site:
                          'TouchDesigner is licensed separately by Derivative.</div>')
             self.doc_page("%s/index.html" % key, title, lead, body.replace("@@R@@", "../"),
                           [x.replace("@@R@@", "../") for x in side], toc, "legal", extra_top=draft + short,
-                          desc="Backline %s." % title.lower(), side_title="Legal")
+                          desc="ziptie %s." % title.lower(), side_title="Legal")
 
     def sitemap(self):
         u = self.cfg.get("site_url", "").rstrip("/")

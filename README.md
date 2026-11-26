@@ -1,6 +1,6 @@
-# Backline site
+# ziptie site
 
-Static website of Backline (landing, guide, changelog, EULA / privacy / terms, support, thanks). Plain HTML + CSS,
+Static website of ziptie (landing, guide, changelog, EULA / privacy / terms, support, thanks). Plain HTML + CSS,
 no JavaScript, no build server: GitHub Pages serves this folder as it is. **No product code lives here.**
 Design: the approved mock `docs/mocks/site.html` of the product repo (DESIGN §4 G5a).
 
