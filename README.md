@@ -8,7 +8,7 @@ Design: the approved mock `docs/mocks/site.html` of the product repo (DESIGN §4
 | I want to | Do |
 |---|---|
 | set the Buy / Free trial / customer-portal link, the support email, the video, the screenshot | edit **`site.json`** (the only config; empty link = button says "Coming soon"), then `python3 build.py`, commit, push |
-| refresh guide, changelog, legal pages after the product docs changed | `python3 build.py` (reads `../av_infrastructure`; or `--source <path>`), commit, push |
+| refresh guide, changelog, legal pages after the product docs changed | `python3 build.py` (reads `../ziptie_dev`; or `--source <path>`), commit, push |
 | change landing / support / thanks wording | edit `templates/*.html`, `python3 build.py` |
 | change look | `assets/site.css` |
 | check | `python3 check.py` (every local link, asset and #anchor resolves; lists external links) |

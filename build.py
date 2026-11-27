@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """ziptie site generator. Plain Python 3, standard library only.
 
-    python3 build.py                       # docs from ../av_infrastructure, store links from site.json
-    python3 build.py --source /path/to/av_infrastructure
+    python3 build.py                       # docs from ../ziptie_dev, store links from site.json
+    python3 build.py --source /path/to/ziptie_dev
 
 Writes the whole site (index.html, guide/, changelog/, eula/, privacy/, terms/, support/, thanks/, 404.html,
 sitemap.xml) next to this file. The generated HTML is committed: GitHub Pages serves the repo root as it is.
@@ -43,14 +43,7 @@ def img_size(path):
     except OSError:
         pass
     return 1920, 1080
-GUIDE_PATCH = [(
-    "1. Get the system: `git clone` the repo into any folder you like (for example `~/Documents/av_infrastructure`).",
-    "1. Get the files: after the purchase (or the free trial), open the order email and press **Access purchase**: this is your "
-    "Polar customer portal. There press **Connect GitHub** (your own GitHub account): GitHub invites you to the private release "
-    "repository. Accept the invitation (GitHub email, or github.com/notifications), then download `ziptie-<version>.zip` from the "
-    "repository's Releases and unzip it, or `git clone` the repository, into any "
-    "folder you like (for example `~/Documents/ziptie`). Your licence key is shown in the same portal and in the order email "
-    "(the free trial gets a key too, valid 14 days).")]
+GUIDE_PATCH = []   # wording fixes for an older docs/GUIDE.md: none needed since the 2026-11-27 rewrite
 
 
 # ------------------------------------------------------------------ markdown (the subset the docs use)
@@ -583,15 +576,14 @@ class Site:
         # overview page
         md = Md(link_md=link_md, section_ref=section_ref)
         intro_body = re.sub(r"^# .*\n", "", intro, count=1)
-        intro_html = md.render(re.split(r"\s*Topic manuals", intro_body.strip())[0].strip())  # first paragraph only: the rest points to internal manuals
+        intro_html = md.render(intro_body.strip())
         cards = "".join('<li><a href="@@R@@guide/%s/"><strong>%s %s</strong></a></li>' % (s, esc(n), esc(t)) for n, t, s, _ in secs)
-        notes = ('<div class="callout"><b>Note.</b> This is the working guide of the product. Some parts still speak of the beta; '
-                 'a guide written for buyers comes with version 1.0. Where it says "Windows not yet tested", that is the current state.</div>')
+        notes = ''
         article = intro_html + notes + '<h2 id="sections">Sections</h2><ol start="0">%s</ol>' % cards
         self.doc_page("guide/index.html", "Guide", "",
                       article.replace("@@R@@", "../"), [x.replace("@@R@@", "../") for x in side_for("")], [], "guide",
                       pager=tuple(((a[0].replace("@@R@@", "../"), a[1]) if a else None) for a in pager_for(0)),
-                      desc="ziptie guide: how the system is put together, how to play a show, how to add your own scenes, effects, fixtures and controllers.",
+                      desc="ziptie guide: install, licence, playing a show, MIDI controllers, adding your own scenes and effects.",
                       side_title="Guide contents")
         for k, (n, t, s, body) in enumerate(secs, start=1):
             md = Md(link_md=link_md, section_ref=section_ref, h_offset=-1)
@@ -690,7 +682,7 @@ class Site:
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--source", default=str(HERE.parent / "av_infrastructure"), help="path of the product repo (docs are read from it)")
+    ap.add_argument("--source", default=str(HERE.parent / "ziptie_dev"), help="path of the product repo (docs are read from it)")
     a = ap.parse_args()
     source = Path(a.source).resolve()
     need = [source / "docs" / "GUIDE.md", source / "CHANGELOG.md"] + [source / "docs" / "legal" / f for _, f, _, _ in LEGAL]
